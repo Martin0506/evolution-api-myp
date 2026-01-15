@@ -26,8 +26,9 @@ COPY ./Docker ./Docker
 
 RUN chmod +x ./Docker/scripts/* && dos2unix ./Docker/scripts/*
 
-RUN ./Docker/scripts/generate_database.sh
-
+#RUN ./Docker/scripts/generate_database.sh
+# Generate Prisma client (needed for TypeScript compilation)
+RUN npx prisma generate || echo "Prisma generation skipped"
 RUN npm run build
 
 FROM node:24-alpine AS final
